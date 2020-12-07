@@ -1,0 +1,27 @@
+.banner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	height: 60px;
+	display: flex;
+	align-items: center;
+	background-color:#0099ff;
+	color: white;
+	span {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		text-shadow: 0.5px 0.5px black;
+		font-size: 25px;
+	}
+}
+
+.content {
+	display: flex;
+	margin: 82px auto 32px;
+	padding: 0 16px;
+	max-width: 960px;
+	flex-direction: column;
+	align-items: center;
+}
