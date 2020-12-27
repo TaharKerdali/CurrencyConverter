@@ -1,27 +1,30 @@
-const express = require('express');
-const router = express.Router();
-const https = require('https');
+const http = require('http');
+class Currencies {
 
-router.get('/', (req, res) => {
-	const apiKey = req.query.apiKey;
-	const options = {
-		hostname: 'free.currconv.com',
-		path: `/api/v7/currencies?apiKey=${apiKey}`
-	}
-	const request = https.request(options, (response) => {
-		let buffer = '';
-		response.setEncoding('utf8');
-		response.on('data', (chunk) => {
-			buffer += chunk;
-		})
-		.on('end', () => {
-			res.send(JSON.parse(buffer).results);
+	async getCurrencies(apiKey) {
+		let currenciesPromise = new Promise((resolve, reject) => {
+			const options = {
+				hostname: 'free.currconv.com',
+				path: `/api/v7/currencies?apiKey=${apiKey}`
+			}
+			let request = http.request(options, (res) =>{
+				res.setEncoding('utf-8');
+				let data = '';
+	
+				res.on('data', (chunk) => {
+					data += chunk;
+				}).on('end', () => {
+					resolve(JSON.parse(data).results);
+				});
+			});
+			request.on('error', (e) => {
+				reject(e);
+			});
+
+			request.end();
 		});
-	})
-	request.on('error', (e) => {
-		console.log(`Error request : ${e.message}`);
-	});
-	request.end();
-});
+		return currenciesPromise;
+	}
+}
 
-module.exports = router;
+module.exports = Currencies;
