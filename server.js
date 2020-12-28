@@ -20,7 +20,7 @@ app.use('/api/list-currencies', (req, res) => {
 	})
 });
 
-const currencyRate = require('./controllers/currency.ratee.api');
+const currencyRate = require('./controllers/currency.rate.api');
 app.use('/api/currency-rate', (req, res) => {
 	const currency = req.query.currency;
 	const apiKey = req.query.apiKey;
